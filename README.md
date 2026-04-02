@@ -2,12 +2,15 @@
 
 **MedAssist 360** is a premium, futuristic, AI-powered multilingual emergency triage, prescription understanding, and hospital navigation platform. Built as a world-class AI health product landing page for a hackathon-winning demo.
 
-## Features Design
-- **Cinematic Scroll Animation**: A 240-frame 3D object explosion rendered smoothly on scroll via a custom HTML5 `<canvas>` integration and interpolation (lerp).
+## Key Features
+- **Intelligent Symptoms Checker**: Seamlessly embedded interactive symptom diagnosis featuring:
+  - Real-time **Voice Input** utilizing the native Web Speech API.
+  - Contextual AI analysis offering professional urgency categorization.
+  - Dynamically filtering nearby medical facilities with integrated Hospital maps and real-time list of available specialist Doctors.
+- **Cinematic Scroll Animation**: A 300+ frame 3D object explosion rendered smoothly via a custom HTML5 `<canvas>` integration and interpolation (lerp).
 - **Anti-gravity visual style** with elegant depth, layered motion, and ultra-minimal typography.
-- **Glassmorphism** and deeply integrated CSS3 animations for a weightless, premium dark-mode user experience matching the central red-tinted 3D objects.
-- Interactive JavaScript demo simulation predicting urgency levels, specialty, and nearest care facilities.
-- Fully responsive on all devices adjusting the 3D scroll explosion via dynamic `object-fit: cover` calculations, without utilizing any external frameworks like Tailwind or Bootstrap. Pure HTML5, CSS3, and Vanilla JavaScript.
+- **Glassmorphism** and deeply integrated CSS3 animations for a weightless, premium dark-mode user experience.
+- Fully responsive on all devices without utilizing any external frameworks like Tailwind or Bootstrap. Pure HTML5, CSS3, and Vanilla JavaScript.
 
 ## Setup Instructions
 
@@ -16,20 +19,26 @@
    ```text
    medassist-360/
    │── index.html
+   │── login.html
    │── css/
    │   └── style.css
    │── js/
-   │   └── script.js
-   │── finalframes/      <-- 240-frame 3D sequence (.jpg sequence)
+   │   ├── script.js
+   │   └── symptoms.js
+   │── finalframes/      <-- Background tracking sequences
    │── assets/
    └── README.md
    ```
-3. Open `index.html` in any modern web browser to view the application. No local web server is strictly required, though using one (like VS Code Live Server) will enable the smoothest rendering of fonts and relative paths.
+3. Open a local development server for the `Web Speech API` to correctly acquire microphone permissions:
+   ```bash
+   python3 -m http.server 8000
+   ```
+4. Access `http://localhost:8000/` in a modern browser (Google Chrome works best for the Web Speech API).
 
 ## Technologies Used
-- **HTML5**: Semantic tags, accessible structure, `<canvas>` 2D context for image sequence.
-- **CSS3**: Custom properties (Variables) for color theming (Deep Red/Black), Grid, Flexbox, Keyframe Animations, Backdrop-filter for glassmorphism.
-- **Vanilla JavaScript**: High-performance `requestAnimationFrame` scrubbing, mathematical lerp inertia, DOM Manipulation, Event Listeners, Intersection Observers for scroll reveal, and a simulated API delay for the interactive demo.
+- **HTML5 & Web Speech API**: Semantic tags, accessible structure, `<canvas>` 2D context for image sequence, and microphone speech-to-text recognition.
+- **CSS3**: Custom properties (Variables) for color theming (Deep Red/Black/Emerald), Grid, Flexbox, Keyframe Animations, Backdrop-filter for glassmorphism.
+- **Vanilla JavaScript**: High-performance `requestAnimationFrame` scrubbing, mathematical lerp inertia, DOM Manipulation, and simulated AI clinical processing delays.
 
 ## Concept
 The platform aims to solve critical gaps in emergency care:

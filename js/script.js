@@ -113,10 +113,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
 
         // Smooth Lerp Animation Loop
+        window.forceCanvasAutoplay = false; // Expose global toggle
         function animLoop() {
-            if (isLogin) {
+            if (isLogin || window.forceCanvasAutoplay) {
                 // Constantly drives the auto-play forward smoothly but at a much quicker pace
                 targetFrame += 0.35;
+                if(targetFrame >= frameCount) {
+                    targetFrame = targetFrame % frameCount;
+                    animatedFrame = animatedFrame % frameCount;
+                }
             }
 
             // Apply easing / inertia
