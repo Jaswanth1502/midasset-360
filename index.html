@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedAssist 360 | AI-Powered Emergency Intelligence</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- 0. Cinematic Background Engine -->
+    <div class="canvas-bg">
+        <canvas id="cinematic-canvas"></canvas>
+        <div class="overlay"></div>
+    </div>
+
+    <!-- 1. Sticky Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="brand">
+                <span class="brand-icon">✧</span>
+                <span class="brand-text">MedAssist 360</span>
+            </a>
+            <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="nav-links" id="nav-links">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="#" class="nav-link" id="view-toggle-btn">Mobile View</a>
+                <a href="login.html" class="nav-link" style="color: var(--primary);">Login</a>
+                <a href="#demo" class="btn btn-primary nav-cta">Try Live Demo</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 2. Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-container">
+            <div class="hero-content fade-up">
+                <div class="badge-wrapper">
+                    <span class="badge">Next-Gen AI Healthcare</span>
+                </div>
+                <h1 class="hero-title">
+                    The Future of <br>
+                    <span class="text-gradient">Emergency Intelligence.</span>
+                </h1>
+                <p class="hero-subtitle">
+                    An AI-powered multilingual platform for instant triage, prescription decoding, and precision hospital navigation. Make critical decisions in seconds, not hours.
+                </p>
+                <div class="hero-cta-group">
+                    <a href="#features" class="btn btn-primary btn-glow">Get Started</a>
+                    <a href="#demo" class="btn btn-secondary">Explore Demo</a>
+                </div>
+            </div>
+            
+            <div class="hero-visual" id="hero-visual">
+                <div class="floating-dashboard glass-panel magnetic-element">
+                    <div class="dash-header">
+                        <div class="dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <div class="dash-title">AI Triage Active</div>
+                    </div>
+                    <div class="dash-body">
+                        <div class="dash-row input-row">
+                            <i class="icon">◎</i> "Severe chest pain radiating to left arm..."
+                        </div>
+                        <div class="dash-row alert-row highlight-alert">
+                            <span class="alert-icon">⚠️</span>
+                            <div class="alert-text">
+                                <strong>Urgency: Level 1 (Critical)</strong>
+                                <small>Suspected Acute Myocardial Infarction</small>
+                            </div>
+                        </div>
+                        <div class="dash-row recommend-row">
+                            <div class="rec-card">
+                                <strong>Recommended:</strong> Cardiology Dept.
+                            </div>
+                            <div class="rec-card">
+                                <strong>Nearest:</strong> City General Hospital (1.2 mi)
+                            </div>
+                        </div>
+                        <div class="dash-row summary-row">
+                            <button class="btn-micro">Prepare Patient Summary ↗</button>
+                        </div>
+                    </div>
+                    <!-- Anti-gravity rings -->
+                    <div class="orbital-ring ring-1"></div>
+                    <div class="orbital-ring ring-2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2 class="section-title">Intelligent <span class="text-gradient">Capabilities</span></h2>
+                <p class="section-desc">Powered by advanced AI designed for speed, accuracy, and accessibility.</p>
+            </div>
+            <div class="features-grid">
+                <div class="glass-card feature-card lift-hover fade-up">
+                    <div class="f-icon">🎙️</div>
+                    <h4>Voice & Text Input</h4>
+                    <p>Describe your symptoms naturally via voice or text in plain language.</p>
+                </div>
+                <div class="glass-card feature-card lift-hover fade-up">
+                    <div class="f-icon">📷</div>
+                    <h4>Prescription Upload</h4>
+                    <p>Instantly extract and translate data from doctor prescriptions or lab reports.</p>
+                </div>
+                <div class="glass-card feature-card lift-hover fade-up">
+                    <div class="f-icon">🚨</div>
+                    <h4>Priority Detection</h4>
+                    <p>Proprietary algorithm detects critical markers and scores the emergency urgency.</p>
+                </div>
+                <div class="glass-card feature-card lift-hover fade-up">
+                    <div class="f-icon">👨‍⚕️</div>
+                    <h4>Specialist Guidance</h4>
+                    <p>Identifies the exact medical department (e.g., Neurology, Cardiology) required.</p>
+                </div>
+                <div class="glass-card feature-card lift-hover fade-up">
+                    <div class="f-icon">🗺️</div>
+                    <h4>Smart Hospital Routing</h4>
+                    <p>Recommends the nearest hospital equipped to handle your specific emergency.</p>
+                </div>
+                <div class="glass-card feature-card lift-hover fade-up">
+                    <div class="f-icon">🌍</div>
+                    <h4>Multilingual Support</h4>
+                    <p>Breaks down language barriers with real-time translation for diverse communities.</p>
+                </div>
+                <div class="glass-card feature-card lift-hover fade-up">
+                    <div class="f-icon">📤</div>
+                    <h4>Shareable Summary</h4>
+                    <p>Generates a quick, standardized medical brief to hand directly to ER staff.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Interactive Demo Section -->
+    <section class="demo-section" id="demo">
+        <div class="container">
+            <div class="demo-container glass-panel fade-up">
+                <div class="demo-left">
+                    <h3 class="demo-title">Live <span class="text-gradient">Simulation</span></h3>
+                    <p class="demo-desc">Test the AI engine. Describe a symptom below to see how MedAssist 360 responds in real time.</p>
+                    
+                    <div class="demo-form">
+                        <div class="input-group">
+                            <label>Patient Symptoms</label>
+                            <textarea id="demo-input" placeholder="e.g. My dad is 65, suddenly cannot speak clearly, and his right arm is weak..."></textarea>
+                        </div>
+                        <div class="demo-controls">
+                            <div class="input-group select-group">
+                                <select id="demo-language">
+                                    <option>English</option>
+                                    <option>Spanish</option>
+                                    <option>Mandarin</option>
+                                    <option>Hindi</option>
+                                </select>
+                            </div>
+                            <button id="upload-btn" class="btn btn-outline btn-sm">📎 Upload</button>
+                        </div>
+                        <button id="analyze-btn" class="btn btn-primary btn-glow full-width mt-1">Analyze Symptoms</button>
+                    </div>
+                </div>
+                
+                <div class="demo-right">
+                    <div class="demo-output-wrapper" id="demo-output-wrapper">
+                        <!-- Initial State -->
+                        <div class="demo-waiting" id="demo-waiting">
+                            <div class="pulse-ring"></div>
+                            <p>Awaiting symptom input...</p>
+                        </div>
+                        
+                        <!-- Loading State -->
+                        <div class="demo-loading hidden" id="demo-loading">
+                            <div class="spinner"></div>
+                            <p>AI Engine Processing...</p>
+                        </div>
+                        
+                        <!-- Output State -->
+                        <div class="demo-results hidden" id="demo-results">
+                            <div class="result-header">
+                                <span class="pulse-dot"></span> Real-time Analysis Complete
+                            </div>
+                            
+                            <div class="result-card urgency critical">
+                                <div class="r-label">Urgency Level</div>
+                                <div class="r-value" id="res-urgency">Level 1: Critical (Suspected Stroke)</div>
+                            </div>
+                            
+                            <div class="result-card secondary">
+                                <div class="r-label">Suggested Department</div>
+                                <div class="r-value" id="res-dept">Neurology / Stroke Center</div>
+                            </div>
+                            
+                            <div class="result-row">
+                                <div class="result-card small">
+                                    <div class="r-label">Nearest Care</div>
+                                    <div class="r-value" id="res-hospital">Central Med Center (2.4mi)</div>
+                                </div>
+                                <div class="result-card small action">
+                                    <div class="r-label">Action</div>
+                                    <div class="r-value">Call 911 Immediately</div>
+                                </div>
+                            </div>
+                            
+                            <div class="result-card summary">
+                                <div class="r-label">ER Handoff Summary</div>
+                                <div class="r-value text-sm" id="res-summary">65yo male presenting with sudden onset dysarthria. High suspicion for acute CVA.</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Why MedAssist 360 Wins Section -->
+    <section class="metrics-section" id="why-us">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2 class="section-title">Built for <span class="text-gradient">Impact</span></h2>
+                <p class="section-desc">Why this platform represents the next evolution in pre-hospital care.</p>
+            </div>
+            
+            <div class="metrics-grid">
+                <div class="metric-card glass-panel fade-up delay-1">
+                    <div class="metric-value text-gradient">92%</div>
+                    <div class="metric-label">Faster Decision True</div>
+                    <p>Reduces the time patients take to decide to go to the ER.</p>
+                </div>
+                <div class="metric-card glass-panel fade-up delay-2">
+                    <div class="metric-value text-gradient">40+</div>
+                    <div class="metric-label">Languages Supported</div>
+                    <p>Accessible medical intelligence for global communities.</p>
+                </div>
+                <div class="metric-card glass-panel fade-up delay-3">
+                    <div class="metric-value text-gradient">0</div>
+                    <div class="metric-label">Data Privacy Risks</div>
+                    <p>No storage of PII; sessions are encrypted & ephemeral.</p>
+                </div>
+                <div class="metric-card glass-panel fade-up delay-4">
+                    <div class="metric-value text-gradient">L1</div>
+                    <div class="metric-label">Startup Ready</div>
+                    <p>Highly scalable architecture designed for real-world launch.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 9. Testimonials / Trust Section -->
+    <section class="trust-section">
+        <div class="container">
+            <div class="trust-grid">
+                <div class="trust-card glass-panel fade-up">
+                    <div class="stars">★★★★★</div>
+                    <p class="quote">"This AI correctly identified stroke symptoms that we thought was just fatigue. It saved us crucial hours by routing us directly to a neurology-equipped facility."</p>
+                    <div class="author">- Concept User Simulation</div>
+                </div>
+                <div class="trust-card glass-panel fade-up delay-1">
+                    <div class="stars">★★★★★</div>
+                    <p class="quote">"The ER handoff summary feature is exactly what triage nurses need to bypass language barriers and get straight to treatment."</p>
+                    <div class="author">- ER Physician Feedback</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. Final CTA Section -->
+    <section class="cta-section" id="contact" style="min-height: 80vh; display: flex; align-items: center;">
+        <div class="container" style="width: 100%;">
+            <div class="minimal-cta fade-up" style="text-align: center;">
+                <h2 style="font-size: 4rem; text-shadow: 0 10px 30px rgba(0,0,0,0.8); margin-bottom: 30px;">
+                    Experience the Future of <br><span style="color: var(--primary);">Emergency Intelligence.</span>
+                </h2>
+                <div class="cta-actions" style="justify-content: center;">
+                    <a href="#demo" class="btn btn-primary btn-glow btn-large" style="padding: 18px 45px; font-size: 1.2rem; border-radius: 50px;">Launch Platform</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="brand">
+                        <span class="brand-icon">✧</span>
+                        <span class="brand-text">MedAssist 360</span>
+                    </a>
+                    <p>AI-powered multilingual emergency triage, prescription understanding, and hospital navigation platform.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Platform</h4>
+                    <a href="#features">Features</a>
+                    <a href="#demo">Live Demo</a>
+                </div>
+                <div class="footer-bottom" style="width: 100%; grid-column: span 2;">
+                    <p>&copy; 2026 MedAssist 360. Built for Hackathon Excellence.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 11. Mobile Viewer Simulation Overlay -->
+    <div id="mobile-viewer-overlay">
+        <div class="mobile-viewer-container">
+            <div class="mobile-device-frame">
+                <div class="mobile-notch"></div>
+                <iframe id="mobile-viewer-frame" src=""></iframe>
+            </div>
+            <button id="close-mobile-viewer" class="btn btn-secondary" style="margin-top: 20px; z-index: 10;">Close Mockup Preview</button>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="js/script.js"></script>
+</body>
+</html>

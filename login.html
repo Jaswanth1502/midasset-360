@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | MedAssist 360</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            /* Locks physical scrollbar, lets wheel events only drive cinematic engine */
+        }
+
+        .login-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 460px;
+            padding: 50px 40px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .login-header {
+            margin-bottom: 35px;
+        }
+
+        .login-brand {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .login-subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .login-form {
+            position: relative;
+            z-index: 10;
+        }
+
+        .login-form .input-group {
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .login-form .input-group input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 15px 18px;
+            color: #fff;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            transition: var(--trans-smooth);
+            outline: none;
+        }
+
+        .login-form .input-group input:focus {
+            border-color: var(--primary);
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 15px var(--primary-dim);
+        }
+
+        .login-form .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        .login-options a {
+            color: var(--primary);
+            font-weight: 500;
+            transition: var(--trans-smooth);
+        }
+
+        .login-options a:hover {
+            color: #ff6666;
+            text-shadow: 0 0 10px var(--primary-dim);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #cbd5e1;
+            cursor: pointer;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .checkbox-group input {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            background-color: transparent;
+            border: 1px solid var(--glass-border);
+        }
+
+        .auth-footer {
+            margin-top: 35px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .auth-footer a {
+            color: #fff;
+            font-weight: 600;
+            transition: var(--trans-smooth);
+            margin-left: 5px;
+        }
+
+        .auth-footer a:hover {
+            color: var(--primary);
+        }
+
+        .simple-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 30px 40px;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                height: auto;
+            }
+
+            .login-section {
+                height: auto;
+                min-height: 100vh;
+                align-items: flex-start;
+                padding-top: 100px;
+                padding-bottom: 40px;
+            }
+
+            .simple-nav {
+                padding: 15px 20px;
+                position: absolute;
+                /* stop it covering the form when scrolling */
+                background: rgba(10, 10, 10, 0.8);
+                -webkit-backdrop-filter: blur(10px);
+                backdrop-filter: blur(10px);
+            }
+
+            .simple-nav .btn {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+
+            .brand-text {
+                font-size: 1.2rem;
+            }
+
+            .login-card {
+                padding: 40px 25px;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Cinematic Background Engine -->
+    <div class="canvas-bg">
+        <canvas id="cinematic-canvas"></canvas>
+        <div class="overlay"></div>
+    </div>
+
+    <!-- Minimal Nav -->
+    <header class="simple-nav">
+        <a href="index.html" class="brand">
+            <span class="brand-icon">✧</span>
+            <span class="brand-text">MedAssist 360</span>
+        </a>
+        <a href="index.html" class="btn btn-outline btn-sm">← Back to Home</a>
+    </header>
+
+    <!-- Login Area -->
+    <section class="login-section">
+        <div class="glass-panel login-card hover-tilt">
+            <div class="login-header">
+                <a href="index.html" class="login-brand" style="text-decoration: none;">
+                    <span class="brand-icon" style="font-size: 2.5rem; margin-bottom: 5px;">✧</span>
+                </a>
+                <h2 style="font-size: 2.2rem; margin-bottom: 12px; font-weight: 700;">Welcome <span
+                        class="text-gradient">Back</span></h2>
+                <p class="login-subtitle">Secure access to your medical intelligence dashboard.</p>
+            </div>
+
+            <form class="login-form" action="index.html" method="GET">
+                <div class="input-group">
+                    <label style="display: block; margin-bottom: 8px; font-size: 0.9rem; color: #cbd5e1;">Work
+                        Email</label>
+                    <input type="email" placeholder="e.g., doctor@hospital.com" required>
+                </div>
+                <div class="input-group">
+                    <label
+                        style="display: block; margin-bottom: 8px; font-size: 0.9rem; color: #cbd5e1;">Password</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+
+                <div class="login-options">
+                    <label class="checkbox-group">
+                        <input type="checkbox" checked>
+                        <span>Remember securely</span>
+                    </label>
+                    <a href="#">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-glow full-width mt-1"
+                    style="padding: 16px; font-size: 1.1rem; border-radius: 14px; text-transform: uppercase; letter-spacing: 1px;">
+                    Enter Dashboard
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                Want to be a member? <a href="register.html">Create an Account</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- JS -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>
