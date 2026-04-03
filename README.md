@@ -7,6 +7,7 @@
   - Real-time **Voice Input** utilizing the native Web Speech API.
   - Contextual AI analysis offering professional urgency categorization.
   - Dynamically filtering nearby medical facilities with integrated Hospital maps and real-time list of available specialist Doctors.
+- **Snapshot Assistant**: Upload or capture medical documents, prescriptions, or medicine packaging for instant AI analysis. Integrated directly into the homepage.
 - **Cinematic Scroll Animation**: A 300+ frame 3D object explosion rendered smoothly via a custom HTML5 `<canvas>` integration and interpolation (lerp).
 - **Anti-gravity visual style** with elegant depth, layered motion, and ultra-minimal typography.
 - **Glassmorphism** and deeply integrated CSS3 animations for a weightless, premium dark-mode user experience.
@@ -20,10 +21,15 @@
    medassist-360/
    │── index.html
    │── login.html
+   │── register.html
+   │── snapshot-assistant.html
+   │── symptoms-checker.html
    │── css/
-   │   └── style.css
+   │   ├── style.css
+   │   └── snapshot.css
    │── js/
    │   ├── script.js
+   │   ├── snapshot.js
    │   └── symptoms.js
    │── finalframes/      <-- Background tracking sequences
    │── assets/
