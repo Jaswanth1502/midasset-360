@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snapshot Assistant | MedAssist 360</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/snapshot.css?v=2">
+</head>
+<body>
+
+    <!-- Cinematic Background -->
+    <div class="canvas-bg">
+        <canvas id="cinematic-canvas"></canvas>
+        <div class="overlay"></div>
+    </div>
+
+    <!-- Sticky Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand">
+                <span class="brand-icon">✧</span>
+                <span class="brand-text">MedAssist 360</span>
+            </a>
+            <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="nav-links" id="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="symptoms-checker.html" class="nav-link">Symptoms Checker</a>
+                <a href="snapshot-assistant.html" class="nav-link text-gradient active">Snapshot</a>
+                <a href="login.html" class="nav-link" style="color: var(--primary);">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="snapshot-main">
+        <div class="container snapshot-container">
+            
+            <!-- Step 1: Upload / Capture -->
+            <section class="snapshot-step glass-panel fade-up active" id="step-input">
+                <div class="snapshot-header">
+                    <h1 class="snapshot-title">Snapshot <span class="text-gradient">Assistant</span></h1>
+                    <p class="snapshot-desc">Upload or capture your medical documents, prescriptions, or medicine packaging for instant AI analysis.</p>
+                </div>
+
+                <div class="input-types">
+                    <select id="doc-type-select" class="premium-select" title="Select Document Type">
+                        <option value="prescription">Prescription</option>
+                        <option value="medicine">Medicine / Tablet Pack</option>
+                        <option value="lab_report">Lab / Diagnostic Report</option>
+                        <option value="other">Other Medical Document</option>
+                    </select>
+                </div>
+
+                <div class="action-cards">
+                    <div class="action-card" id="btn-camera">
+                        <div class="icon-ring">📷</div>
+                        <h3>Take Photo</h3>
+                        <p>Use your device camera</p>
+                    </div>
+                    <label class="action-card" for="file-upload">
+                        <div class="icon-ring">📂</div>
+                        <h3>Upload Image</h3>
+                        <p>Choose from gallery</p>
+                        <input type="file" id="file-upload" accept="image/*" hidden>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Camera Viewport (Hidden initially) -->
+            <section class="snapshot-step glass-panel fade-up hidden" id="step-camera">
+                <div class="camera-header">
+                    <h2>Capture Document</h2>
+                    <button id="close-camera" class="btn-micro">Close</button>
+                </div>
+                <div class="camera-viewport-wrapper">
+                    <video id="camera-feed" class="camera-feed" autoplay playsinline></video>
+                    <div class="camera-overlay">
+                        <div class="corner top-left"></div>
+                        <div class="corner top-right"></div>
+                        <div class="corner bottom-left"></div>
+                        <div class="corner bottom-right"></div>
+                        <div class="guidance-text">Align document within the frame</div>
+                    </div>
+                </div>
+                <div class="camera-controls">
+                    <button id="capture-photo" class="btn-capture" title="Capture Photo">
+                        <div class="capture-inner"></div>
+                    </button>
+                </div>
+                <canvas id="snapshot-canvas" hidden></canvas>
+            </section>
+
+            <!-- Step 2: Processing (Hidden initially) -->
+            <section class="snapshot-step glass-panel fade-up hidden" id="step-processing">
+                <div class="processing-container">
+                    <div class="preview-wrapper">
+                        <img id="preview-image" src="" alt="Snapshot Preview">
+                        <div class="scanner-line"></div>
+                        <div class="ocr-grid"></div>
+                    </div>
+                    <div class="processing-status">
+                        <div class="spinner"></div>
+                        <h3 id="processing-text">Analyzing Document...</h3>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 3: Results Dashboard (Hidden initially) -->
+            <section class="snapshot-step fade-up hidden" id="step-results">
+                <div class="results-header">
+                    <h2>Analysis <span class="text-gradient">Complete</span></h2>
+                    <button id="btn-restart" class="btn btn-outline btn-sm">Scan Another</button>
+                </div>
+
+                <div class="disclaimer-banner">
+                    ⚠️ <strong>Informational Only.</strong> This tool does not provide a final diagnosis. Always verify with a licensed doctor or pharmacist.
+                </div>
+
+                <div class="results-grid">
+                    
+                    <!-- Primary Extracted Information -->
+                    <div class="result-card glass-panel main-info-card" id="card-extracted">
+                        <h3><span class="icon">📄</span> <span id="res-title">Extracted Details</span></h3>
+                        <div class="extracted-content" id="res-extracted-content">
+                            <!-- Dynamic Content Injected Here -->
+                        </div>
+                    </div>
+
+                    <!-- Safety & Understanding -->
+                    <div class="result-card glass-panel safety-info-card" id="card-safety">
+                        <h3><span class="icon">🛡️</span> Guidance & Safety</h3>
+                        <div class="extracted-content" id="res-safety-content">
+                            <!-- Dynamic Content Injected Here -->
+                        </div>
+                    </div>
+
+                    <!-- Food & Diet -->
+                    <div class="result-card glass-panel diet-card hidden" id="card-diet">
+                        <h3><span class="icon">🥗</span> Food Preferences & Medication Rules</h3>
+                        <div class="extracted-content" id="res-diet-content">
+                            <!-- Dynamic Content Injected Here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Medication Timeline -->
+                    <div class="result-card glass-panel timeline-card hidden" id="card-timeline">
+                        <h3><span class="icon">⏰</span> Medication Timeline</h3>
+                        <div class="timeline-container" id="res-timeline">
+                            <!-- Dynamic Timeline -->
+                        </div>
+                    </div>
+
+                    <!-- Nearby Services -->
+                    <div class="result-card glass-panel map-card" id="card-nearby">
+                        <h3><span class="icon">📍</span> Nearby Services</h3>
+                        <div class="nearby-list" id="res-nearby">
+                            <!-- Dynamic Nearby Centers/Pharmacies -->
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- JS -->
+    <script src="js/script.js"></script>
+    <script src="js/snapshot.js"></script>
+</body>
+</html>
