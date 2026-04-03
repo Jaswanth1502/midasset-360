@@ -34,9 +34,7 @@
             </button>
             <nav class="nav-links" id="nav-links">
                 <a href="#home" class="nav-link">Home</a>
-                <a href="#contact" class="nav-link">Contact</a>
-                <a href="snapshot-assistant.html" class="nav-link text-gradient" id="nav-snapshot-btn">Snapshot Assistant</a>
-                <a href="symptoms-checker.html" class="nav-link text-gradient" id="nav-symptoms-btn">Symptoms Checker</a>
+                <a href="#how-it-works" class="nav-link text-gradient" id="nav-symptoms-btn">Symptoms Checker</a>
                 <a href="#" class="nav-link" id="view-toggle-btn">Mobile View</a>
                 <a href="login.html" class="nav-link" style="color: var(--primary);">Login</a>
                 <a href="#demo" class="btn btn-primary nav-cta">Try Live Demo</a>
@@ -61,7 +59,6 @@
                 <div class="hero-cta-group">
                     <a href="symptoms-checker.html" class="btn btn-primary btn-glow">Get Started</a>
                     <a href="#demo" class="btn btn-secondary">Explore Demo</a>
-                    <a href="symptoms-checker.html" id="hero-symptoms-btn" class="btn btn-outline" style="border-color: var(--primary); color: var(--primary); text-decoration: none;">Check Symptoms</a>
                 </div>
             </div>
             
@@ -75,30 +72,28 @@
                     </div>
                     <div class="dash-body">
                         <div class="dash-row input-row">
-                            <i class="icon">◎</i> "Severe chest pain radiating to left arm..."
+                            <i class="icon">◎</i> "Futuristic AI-powered multilingual emergency triage platform..."
                         </div>
                         <div class="dash-row alert-row highlight-alert">
-                            <span class="alert-icon">⚠️</span>
+                            <span class="alert-icon">⚡</span>
                             <div class="alert-text">
-                                <strong>Urgency: Level 1 (Critical)</strong>
-                                <small>Suspected Acute Myocardial Infarction</small>
+                                <strong>Intelligent Symptoms Checker</strong>
+                                <small>Real-time voice input & contextual AI categorization</small>
                             </div>
                         </div>
                         <div class="dash-row recommend-row">
                             <div class="rec-card">
-                                <strong>Recommended:</strong> Cardiology Dept.
+                                <strong>Snapshot:</strong> Instant AI Doc Analysis
                             </div>
                             <div class="rec-card">
-                                <strong>Nearest:</strong> City General Hospital (1.2 mi)
+                                <strong>Precision:</strong> Dynamic Hospital Nav
                             </div>
                         </div>
                         <div class="dash-row summary-row">
-                            <button class="btn-micro">Prepare Patient Summary ↗</button>
+                            <button class="btn-micro">Deploy Hackathon Demo ↗</button>
                         </div>
                     </div>
-                    <!-- Anti-gravity rings -->
-                    <div class="orbital-ring ring-1"></div>
-                    <div class="orbital-ring ring-2"></div>
+
                 </div>
             </div>
         </div>
@@ -205,23 +200,7 @@
     </section>
 
 
-    <!-- 9. Testimonials / Trust Section -->
-    <section class="trust-section">
-        <div class="container">
-            <div class="trust-grid">
-                <div class="trust-card glass-panel fade-up">
-                    <div class="stars">★★★★★</div>
-                    <p class="quote">"This AI correctly identified stroke symptoms that we thought was just fatigue. It saved us crucial hours by routing us directly to a neurology-equipped facility."</p>
-                    <div class="author">- Concept User Simulation</div>
-                </div>
-                <div class="trust-card glass-panel fade-up delay-1">
-                    <div class="stars">★★★★★</div>
-                    <p class="quote">"The ER handoff summary feature is exactly what triage nurses need to bypass language barriers and get straight to treatment."</p>
-                    <div class="author">- ER Physician Feedback</div>
-                </div>
-            </div>
-        </div>
-    </section>
+
 
     <!-- 10. Final CTA Section -->
     <section class="cta-section" id="contact" style="min-height: 80vh; display: flex; align-items: center;">
@@ -231,7 +210,7 @@
                     Experience the Future of <br><span style="color: var(--primary);">Emergency Intelligence.</span>
                 </h2>
                 <div class="cta-actions" style="justify-content: center;">
-                    <a href="#demo" class="btn btn-primary btn-glow btn-large" style="padding: 18px 45px; font-size: 1.2rem; border-radius: 50px;">Launch Platform</a>
+                    <a href="#demo" class="btn btn-primary btn-glow btn-large" style="padding: 18px 45px; font-size: 1.2rem; border-radius: 50px;">Download As App</a>
                 </div>
             </div>
         </div>
@@ -272,6 +251,44 @@
         </div>
     </div>
 
+    <!-- Global Scroll Toggle (Bottom Right) -->
+    <div id="global-scroll-toggle" style="position: fixed; bottom: 15px; right: 15px; z-index: 9999; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 0 15px rgba(255, 51, 51, 0.2); border-radius: 50%;" onmouseover="this.style.transform='scale(1.08)'; this.style.boxShadow='0 0 25px rgba(255, 51, 51, 0.6)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 15px rgba(255, 51, 51, 0.2)'">
+        <div style="width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-blue) 0%, var(--primary) 100%); display: flex; justify-content: center; align-items: center;">
+            <svg id="scroll-toggle-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('global-scroll-toggle');
+            const arrow = document.getElementById('scroll-toggle-arrow');
+            let isAtBottom = false;
+
+            window.addEventListener('scroll', () => {
+                const scrollPosition = window.innerHeight + window.scrollY;
+                const bottomPosition = document.body.offsetHeight - 50; 
+                
+                if (scrollPosition >= bottomPosition) {
+                    isAtBottom = true;
+                    arrow.style.transform = 'rotate(180deg)';
+                } else {
+                    isAtBottom = false;
+                    arrow.style.transform = 'rotate(0deg)';
+                }
+            });
+
+            toggle.addEventListener('click', () => {
+                if (isAtBottom) {
+                    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                } else {
+                    window.scrollTo({ top: document.body.scrollHeight, left: 0, behavior: 'smooth' });
+                }
+            });
+        });
+    </script>    
+    
     <!-- JS -->
     <script src="js/script.js"></script>
 </body>

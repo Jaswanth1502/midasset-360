@@ -101,10 +101,16 @@
                         <div class="input-group">
                             <label>Gender</label>
                             <select id="sym-gender" title="Select Gender" style="width: 100%; padding: 12px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; margin-bottom: 15px;">
-                                <option value="male">Male</option>
+                                <option value="male" selected>Male</option>
                                 <option value="female">Female</option>
                                 <option value="other">Other</option>
                             </select>
+                            <div class="hidden" id="pref-female-doc-wrap" style="margin-top: -5px; margin-bottom: 15px;">
+                                <label style="display: flex; align-items: center; cursor: pointer; color: var(--primary); font-size: 0.9rem;">
+                                    <input type="checkbox" id="pref-female-doc" style="margin-right: 8px; accent-color: var(--primary);">
+                                    Prefer Female Doctor
+                                </label>
+                            </div>
                         </div>
                         <div class="input-group">
                             <label>Age (Optional)</label>

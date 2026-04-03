@@ -206,8 +206,29 @@ document.addEventListener('DOMContentLoaded', () => {
             const xRot = (y / rect.height) * -15; 
             const yRot = (x / rect.width) * 15;   
             floatingDash.style.transform = `rotateX(${xRot}deg) rotateY(${yRot}deg) translateZ(20px)`;
-            floatingDash.style.transition = 'none';
+            floatingDash.style.transition = 'transform 0.1s ease-out';
         });
+        
+        heroVisual.addEventListener('mousedown', (e) => {
+            const rect = heroVisual.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            const xRot = (y / rect.height) * -25; 
+            const yRot = (x / rect.width) * 25;   
+            floatingDash.style.transition = 'transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            floatingDash.style.transform = `rotateX(${xRot}deg) rotateY(${yRot}deg) translateZ(-40px) scale(0.95)`;
+        });
+
+        heroVisual.addEventListener('mouseup', (e) => {
+            const rect = heroVisual.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            const xRot = (y / rect.height) * -15; 
+            const yRot = (x / rect.width) * 15;   
+            floatingDash.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            floatingDash.style.transform = `rotateX(${xRot}deg) rotateY(${yRot}deg) translateZ(20px)`;
+        });
+
         heroVisual.addEventListener('mouseleave', () => {
             floatingDash.style.transition = 'transform 0.5s ease-out';
             floatingDash.style.transform = 'rotateY(-10deg) rotateX(5deg)';

@@ -93,6 +93,16 @@
             color: rgba(255, 255, 255, 0.3);
         }
 
+        /* Fix Browser Autofill Background */
+        .login-form .input-group input:-webkit-autofill,
+        .login-form .input-group input:-webkit-autofill:hover, 
+        .login-form .input-group input:-webkit-autofill:focus, 
+        .login-form .input-group input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px #1a1a1a inset !important;
+            -webkit-text-fill-color: #fff !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
         .login-options {
             display: flex;
             justify-content: space-between;
@@ -199,6 +209,96 @@
                 margin-top: 20px;
             }
         }
+
+        /* Capsule Loader Styles */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        #loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .capsule-loader {
+            width: 34px;
+            height: 80px;
+            border-radius: 17px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            animation: rotateCapsule 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(20, 20, 20, 0.6);
+        }
+
+        @keyframes rotateCapsule {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .capsule-half {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: center;
+            padding: 6px;
+            gap: 3px;
+            position: relative;
+        }
+
+        .white-half {
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .red-half {
+            background: rgba(255, 51, 51, 0.1);
+        }
+
+        .ball {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            animation: floatBalls 1.5s infinite alternate ease-in-out;
+        }
+
+        .white-ball {
+            background: #ffffff;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        }
+
+        .red-ball {
+            background: var(--primary);
+            box-shadow: 0 0 5px var(--primary);
+        }
+
+        .ball:nth-child(1) { animation-delay: 0.1s; }
+        .ball:nth-child(2) { animation-delay: 0.3s; }
+        .ball:nth-child(3) { animation-delay: 0.5s; }
+        .ball:nth-child(4) { animation-delay: 0.2s; }
+        .ball:nth-child(5) { animation-delay: 0.4s; }
+
+        @keyframes floatBalls {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-4px) scale(1.1); }
+        }
     </style>
 </head>
 
@@ -231,7 +331,7 @@
                 <p class="login-subtitle">Secure access to your medical intelligence dashboard.</p>
             </div>
 
-            <form class="login-form" action="index.html" method="GET">
+            <form class="login-form" id="loginForm" onsubmit="handleLoginSubmit(event)">
                 <div class="input-group">
                     <label style="display: block; margin-bottom: 8px; font-size: 0.9rem; color: #cbd5e1;">Work
                         Email</label>
@@ -263,8 +363,42 @@
         </div>
     </section>
 
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="capsule-loader">
+            <div class="capsule-half white-half">
+                <div class="ball white-ball"></div>
+                <div class="ball white-ball"></div>
+                <div class="ball white-ball"></div>
+                <div class="ball white-ball"></div>
+                <div class="ball white-ball"></div>
+            </div>
+            <div class="capsule-half red-half">
+                <div class="ball red-ball"></div>
+                <div class="ball red-ball"></div>
+                <div class="ball red-ball"></div>
+                <div class="ball red-ball"></div>
+                <div class="ball red-ball"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- JS -->
     <script src="js/script.js"></script>
+    <script>
+        function handleLoginSubmit(event) {
+            event.preventDefault(); // Stop normal form submission
+            
+            // Show the loading animation
+            const overlay = document.getElementById('loading-overlay');
+            overlay.classList.add('active');
+            
+            // Simulate network request then redirect with an epic delay
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2500); 
+        }
+    </script>
 </body>
 
 </html>

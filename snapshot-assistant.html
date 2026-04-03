@@ -27,17 +27,11 @@
                 <span class="brand-icon">✧</span>
                 <span class="brand-text">MedAssist 360</span>
             </a>
-            <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <nav class="nav-links" id="nav-links">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="symptoms-checker.html" class="nav-link">Symptoms Checker</a>
-                <a href="snapshot-assistant.html" class="nav-link text-gradient active">Snapshot</a>
-                <a href="login.html" class="nav-link" style="color: var(--primary);">Login</a>
-            </nav>
+            <div class="nav-actions">
+                <a href="index.html" class="btn btn-outline btn-sm" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 50px;">
+                    <span style="font-size: 1.2em; line-height: 1;">←</span> Back to Home
+                </a>
+            </div>
         </div>
     </header>
 
@@ -51,14 +45,7 @@
                     <p class="snapshot-desc">Upload or capture your medical documents, prescriptions, or medicine packaging for instant AI analysis.</p>
                 </div>
 
-                <div class="input-types">
-                    <select id="doc-type-select" class="premium-select" title="Select Document Type">
-                        <option value="prescription">Prescription</option>
-                        <option value="medicine">Medicine / Tablet Pack</option>
-                        <option value="lab_report">Lab / Diagnostic Report</option>
-                        <option value="other">Other Medical Document</option>
-                    </select>
-                </div>
+
 
                 <div class="action-cards">
                     <div class="action-card" id="btn-camera">
@@ -143,14 +130,8 @@
                         </div>
                     </div>
 
-                    <!-- Food & Diet -->
-                    <div class="result-card glass-panel diet-card hidden" id="card-diet">
-                        <h3><span class="icon">🥗</span> Food Preferences & Medication Rules</h3>
-                        <div class="extracted-content" id="res-diet-content">
-                            <!-- Dynamic Content Injected Here -->
-                        </div>
-                    </div>
-                    
+
+
                     <!-- Medication Timeline -->
                     <div class="result-card glass-panel timeline-card hidden" id="card-timeline">
                         <h3><span class="icon">⏰</span> Medication Timeline</h3>

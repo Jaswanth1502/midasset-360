@@ -92,6 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Helper Functions ---
 
+    const navbar = document.getElementById('navbar');
+
     function switchStep(targetStep) {
         // Hide all steps
         [stepInput, stepCamera, stepProcessing, stepResults].forEach(step => {
@@ -105,6 +107,15 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             targetStep.classList.add('active');
         }, 50);
+
+        // Hide navigation bar when capturing
+        if (navbar) {
+            if (targetStep === stepCamera) {
+                navbar.classList.add('hidden');
+            } else {
+                navbar.classList.remove('hidden');
+            }
+        }
     }
 
     function stopCamera() {
@@ -140,154 +151,139 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Mock Data Rendering based on Type ---
+    let scenarioPool = [];
+    
+    function getNextScenario() {
+        if (scenarioPool.length === 0) {
+            scenarioPool = [
+                {
+                    title: 'Prescription Analysis <span style="font-size: 0.7rem; background: rgba(0,255,0,0.1); color: #4ade80; padding: 2px 6px; border-radius: 10px; margin-left: 10px; border: 1px solid rgba(74, 222, 128, 0.3);">98% Confidence</span>',
+                    main: `<div class="info-row"><span class="info-label">Prescribing Physician:</span> <span class="info-value">Dr. Sarah Jenkins, MD</span></div>
+                           <div style="margin-top: 15px;"><strong>Medications:</strong><br>1. Amoxicillin 500mg (3x daily)</div>`,
+                    safety: `<div class="info-row" style="border:none;"><span class="info-label">Advisory:</span> <span class="info-value alert-value" style="font-size: 0.9rem;">Complete the full 7-day course.</span></div>`,
+                    hasTimeline: true,
+                    timeline: `<div class="timeline-item"><span class="time-label">Morning</span><div class="time-action">Amoxicillin 500mg <span class="food-note">After Breakfast</span></div></div>`,
+                    type: 'pharmacy'
+                },
+                {
+                    title: 'Medication Intelligence <span style="font-size: 0.7rem; background: rgba(0,255,0,0.1); color: #4ade80; padding: 2px 6px; border-radius: 10px; margin-left: 10px; border: 1px solid rgba(74, 222, 128, 0.3);">Verified</span>',
+                    main: `<div class="info-row"><span class="info-label">Commercial Name:</span> <span class="info-value highlight-value">Crocin Advance</span></div>
+                           <div class="info-row"><span class="info-label">Active Ingredient:</span> <span class="info-value">Paracetamol 500mg</span></div>`,
+                    safety: `<div class="info-row" style="border:none;"><span class="info-label">Contraindications:</span> <span class="info-value alert-value" style="font-size:0.9rem;">High risk of hepatotoxicity if daily dosage exceeds 4000mg.</span></div>`,
+                    hasTimeline: false,
+                    timeline: '',
+                    type: 'pharmacy'
+                },
+                {
+                    title: 'Pathology AI Analysis <span style="font-size: 0.7rem; background: rgba(255,165,0,0.1); color: #fbbf24; padding: 2px 6px; border-radius: 10px; margin-left: 10px; border: 1px solid rgba(251, 191, 36, 0.3);">Review Required</span>',
+                    main: `<div class="info-row"><span class="info-label">Leukocyte Count:</span> <span class="info-value alert-value">Elevated (14,200 /mcL)</span></div>
+                           <div class="info-row"><span class="info-label">Hemoglobin:</span> <span class="info-value">Normal (13.5)</span></div>`,
+                    safety: `<div class="info-row" style="border:none;"><span class="info-label">Recommendation:</span> <span class="info-value alert-value" style="font-size:0.9rem;">Consult a physician immediately for proper clinical diagnosis.</span></div>`,
+                    hasTimeline: false,
+                    timeline: '',
+                    type: 'hospital'
+                },
+                {
+                    title: 'Prescription Analysis <span style="font-size: 0.7rem; background: rgba(0,255,0,0.1); color: #4ade80; padding: 2px 6px; border-radius: 10px; margin-left: 10px; border: 1px solid rgba(74, 222, 128, 0.3);">95% Confidence</span>',
+                    main: `<div class="info-row"><span class="info-label">Medication:</span> <span class="info-value highlight-value">Salbutamol Inhaler (100mcg)</span></div>
+                           <div class="info-row"><span class="info-label">Instructions:</span> <span class="info-value">2 puffs every 4 hours as needed</span></div>`,
+                    safety: `<div class="info-row" style="border:none;"><span class="info-label">Advisory:</span> <span class="info-value alert-value" style="font-size:0.9rem;">Rinse mouth after use to prevent oral thrush.</span></div>`,
+                    hasTimeline: false,
+                    timeline: '',
+                    type: 'pharmacy'
+                },
+                {
+                    title: 'Medication Intelligence <span style="font-size: 0.7rem; background: rgba(0,255,0,0.1); color: #4ade80; padding: 2px 6px; border-radius: 10px; margin-left: 10px; border: 1px solid rgba(74, 222, 128, 0.3);">Verified</span>',
+                    main: `<div class="info-row"><span class="info-label">Name:</span> <span class="info-value highlight-value">Cetirizine 10mg</span></div>
+                           <div class="info-row"><span class="info-label">Class:</span> <span class="info-value">Antihistamine</span></div>`,
+                    safety: `<div class="info-row" style="border:none;"><span class="info-label">Advisory:</span> <span class="info-value alert-value" style="font-size:0.9rem;">May cause drowsiness. Avoid operating heavy machinery.</span></div>`,
+                    hasTimeline: false,
+                    timeline: '',
+                    type: 'pharmacy'
+                },
+                {
+                    title: 'Lab Report Analysis <span style="font-size: 0.7rem; background: rgba(255,165,0,0.1); color: #fbbf24; padding: 2px 6px; border-radius: 10px; margin-left: 10px; border: 1px solid rgba(251, 191, 36, 0.3);">Review Required</span>',
+                    main: `<div class="info-row"><span class="info-label">LDL Cholesterol:</span> <span class="info-value alert-value">High (160 mg/dL)</span></div>
+                           <div class="info-row"><span class="info-label">HDL Cholesterol:</span> <span class="info-value">Normal (45 mg/dL)</span></div>`,
+                    safety: `<div class="info-row" style="border:none;"><span class="info-label">Dietary Note:</span> <span class="info-value alert-value" style="font-size:0.9rem;">Reduce intake of saturated fats and schedule a cardiologist review.</span></div>`,
+                    hasTimeline: false,
+                    timeline: '',
+                    type: 'hospital'
+                },
+                {
+                    title: 'Prescription Analysis <span style="font-size: 0.7rem; background: rgba(0,255,0,0.1); color: #4ade80; padding: 2px 6px; border-radius: 10px; margin-left: 10px; border: 1px solid rgba(74, 222, 128, 0.3);">97% Confidence</span>',
+                    main: `<div class="info-row"><span class="info-label">Medication:</span> <span class="info-value highlight-value">Amlodipine 5mg</span></div>
+                           <div class="info-row"><span class="info-label">Instructions:</span> <span class="info-value">1x daily for Hypertension</span></div>`,
+                    safety: `<div class="info-row" style="border:none;"><span class="info-label">Advisory:</span> <span class="info-value alert-value" style="font-size:0.9rem;">Monitor blood pressure regularly. Swelling of ankles may occur.</span></div>`,
+                    hasTimeline: true,
+                    timeline: `<div class="timeline-item"><span class="time-label">Morning</span><div class="time-action">Amlodipine 5mg <span class="food-note">Take at the same time daily</span></div></div>`,
+                    type: 'pharmacy'
+                },
+                {
+                    title: 'Medication Intelligence <span style="font-size: 0.7rem; background: rgba(0,255,0,0.1); color: #4ade80; padding: 2px 6px; border-radius: 10px; margin-left: 10px; border: 1px solid rgba(74, 222, 128, 0.3);">Verified</span>',
+                    main: `<div class="info-row"><span class="info-label">Name:</span> <span class="info-value highlight-value">Gelusil Antacid</span></div>
+                           <div class="info-row"><span class="info-label">Type:</span> <span class="info-value">Chewable Tablet</span></div>`,
+                    safety: `<div class="info-row" style="border:none;"><span class="info-label">Usage:</span> <span class="info-value alert-value" style="font-size:0.9rem;">Chew thoroughly before swallowing. Do not take within 2 hours of other medications.</span></div>`,
+                    hasTimeline: false,
+                    timeline: '',
+                    type: 'pharmacy'
+                },
+                {
+                    title: 'Pathology AI Analysis <span style="font-size: 0.7rem; background: rgba(255,165,0,0.1); color: #fbbf24; padding: 2px 6px; border-radius: 10px; margin-left: 10px; border: 1px solid rgba(251, 191, 36, 0.3);">Alert</span>',
+                    main: `<div class="info-row"><span class="info-label">TSH Levels:</span> <span class="info-value alert-value">Elevated (6.5 mIU/L)</span></div>
+                           <div class="info-row"><span class="info-label">Free T4:</span> <span class="info-value">Low (0.8 ng/dL)</span></div>`,
+                    safety: `<div class="info-row" style="border:none;"><span class="info-label">AI Summary:</span> <span class="info-value alert-value" style="font-size:0.9rem;">Indicative of Hypothyroidism. Consult an endocrinologist for thyroid hormone replacement therapy.</span></div>`,
+                    hasTimeline: false,
+                    timeline: '',
+                    type: 'hospital'
+                },
+                {
+                    title: 'Prescription Analysis <span style="font-size: 0.7rem; background: rgba(0,255,0,0.1); color: #4ade80; padding: 2px 6px; border-radius: 10px; margin-left: 10px; border: 1px solid rgba(74, 222, 128, 0.3);">99% Confidence</span>',
+                    main: `<div class="info-row"><span class="info-label">Medication:</span> <span class="info-value highlight-value">Metformin 500mg</span></div>
+                           <div class="info-row"><span class="info-label">Instructions:</span> <span class="info-value">2x daily with meals</span></div>`,
+                    safety: `<div class="info-row" style="border:none;"><span class="info-label">Advisory:</span> <span class="info-value alert-value" style="font-size:0.9rem;">Always take with food to avoid gastrointestinal issues. Monitor blood sugar levels.</span></div>`,
+                    hasTimeline: true,
+                    timeline: `<div class="timeline-item"><span class="time-label">Morning</span><div class="time-action">Metformin 500mg <span class="food-note">During Breakfast</span></div></div>
+                               <div class="timeline-item"><span class="time-label">Evening</span><div class="time-action">Metformin 500mg <span class="food-note">During Dinner</span></div></div>`,
+                    type: 'pharmacy'
+                }
+            ];
+            // Shuffle pool
+            scenarioPool.sort(() => Math.random() - 0.5);
+        }
+        return scenarioPool.pop();
+    }
+
     function renderResults() {
-        const docType = docTypeSelect.value;
         const mainContent = document.getElementById('res-extracted-content');
         const safetyContent = document.getElementById('res-safety-content');
         const timelineCard = document.getElementById('card-timeline');
         const timelineContent = document.getElementById('res-timeline');
         const nearbyContent = document.getElementById('res-nearby');
         const titleSpan = document.getElementById('res-title');
-        const dietCard = document.getElementById('card-diet');
-        const dietContent = document.getElementById('res-diet-content');
         const safetyCard = document.getElementById('card-safety');
 
-        // Reset
+        // Reset display
         timelineCard.classList.add('hidden');
         timelineContent.innerHTML = '';
-        if (dietCard) dietCard.classList.add('hidden');
-        if (dietContent) dietContent.innerHTML = '';
-        if (safetyCard) safetyCard.classList.add('hidden');
-        nearbyContent.innerHTML = '';
-
-    function renderErrorState() {
-        const mainContent = document.getElementById('res-extracted-content');
-        const safetyContent = document.getElementById('res-safety-content');
-        const timelineCard = document.getElementById('card-timeline');
-        const timelineContent = document.getElementById('res-timeline');
-        const nearbyContent = document.getElementById('res-nearby');
-        const titleSpan = document.getElementById('res-title');
-        const dietCard = document.getElementById('card-diet');
-        const dietContent = document.getElementById('res-diet-content');
-        const safetyCard = document.getElementById('card-safety');
-
-        titleSpan.innerText = 'Document Not Recognized';
-        timelineCard.classList.add('hidden');
-        timelineContent.innerHTML = '';
-        if (dietCard) dietCard.classList.add('hidden');
-        if (dietContent) dietContent.innerHTML = '';
         if (safetyCard) safetyCard.classList.remove('hidden');
         nearbyContent.innerHTML = '';
 
-        mainContent.innerHTML = `
-            <p style="color:var(--error); font-weight:600;">Error: Image is too dark or empty.</p>
-            <p style="color:var(--text-dim); font-size:0.9rem; margin-top:10px;">We couldn't detect any medical information in this image. It appears to be completely black or severely underexposed. Please ensure proper lighting and try capturing again.</p>
-        `;
-        safetyContent.innerHTML = `
-            <p><strong>Action Required:</strong> Please retake the photo with flash enabled or move to a brighter area.</p>
-        `;
-    }
+        const scenario = getNextScenario();
 
-        if (docType === 'prescription') {
-            titleSpan.innerText = 'Simple Prescription Guide';
-            mainContent.innerHTML = `
-                <div class="info-row"><span class="info-label">Doctor Name:</span> <span class="info-value">Dr. Sarah Jenkins</span></div>
-                <div class="info-row"><span class="info-label">Clinic / Hospital:</span> <span class="info-value">City Health Associates</span></div>
-                <div class="info-row"><span class="info-label">Date Written:</span> <span class="info-value">Oct 24, 2026</span></div>
-                <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
-                    <strong>Your Medicines:</strong>
-                    <div class="info-row" style="border:none; padding-bottom:0;"><span class="info-label">1. Amoxicillin (Pill to kill germs/fever)</span> <span class="info-value highlight-value">Take 3 times a day (for 7 days)</span></div>
-                    <div class="info-row" style="border:none; padding-bottom:0;"><span class="info-label">2. Ibuprofen (Pill for body pain)</span> <span class="info-value highlight-value">Take 2 times a day (only if pain)</span></div>
-                    <div class="info-row" style="border:none; padding-bottom:0;"><span class="info-label">3. Pantoprazole (Pill for stomach gas)</span> <span class="info-value highlight-value">Take 1 time early morning (empty stomach)</span></div>
-                </div>
-            `;
-            
-            // Hide Safety Card explicitly as requested
-            if (safetyCard) safetyCard.classList.add('hidden');
-            
-            if (dietCard && dietContent) {
-                dietCard.classList.remove('hidden');
-                dietContent.innerHTML = `
-                    <div class="info-row"><span class="info-label">Stomach Pill Rule:</span> <span class="info-value">Eat this empty stomach in the morning. Wait 30 minutes before eating food.</span></div>
-                    <div class="info-row"><span class="info-label">Pain Pill Rule:</span> <span class="info-value">Always eat food first before taking this pill, or it will hurt your stomach.</span></div>
-                    <div class="info-row"><span class="info-label">Danger Warning:</span> <span class="info-value alert-value">Do NOT drink alcohol while taking the germ-killing pill, you will feel very sick.</span></div>
-                    <div class="info-row" style="margin-top: 10px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 10px;">
-                        <span class="info-label">Best Foods to Eat:</span> 
-                        <span class="info-value" style="color: #a7f3d0;">
-                            ✅ Eat <b>Yogurt (Curd)</b> because it puts good bugs back in your stomach while taking the germ-killer pill.<br>
-                            ✅ Eat <b>Bananas, Rice, or soft foods</b> because they protect your stomach from pain pill burns.<br>
-                            ✅ Drink <b>plenty of water</b>.
-                        </span>
-                    </div>
-                `;
-            }
+        titleSpan.innerHTML = scenario.title;
+        mainContent.innerHTML = scenario.main;
+        safetyContent.innerHTML = scenario.safety;
 
+        if (scenario.hasTimeline) {
             timelineCard.classList.remove('hidden');
-            timelineContent.innerHTML = `
-                <div class="timeline-item">
-                    <span class="time-label">Morning (When you wake up)</span>
-                    <div class="time-action">Take Stomach Gas Pill <span class="food-note">Empty Stomach</span></div>
-                    <div class="time-action" style="margin-top: 5px;">Wait 30 minutes, then eat breakfast</div>
-                    <div class="time-action" style="margin-top: 5px;">Take Germ Pill + Pain Pill <span class="food-note">After Eating</span></div>
-                </div>
-                <div class="timeline-item">
-                    <span class="time-label">Afternoon (Lunch Time)</span>
-                    <div class="time-action">Take Germ Pill <span class="food-note">After Eating Food</span></div>
-                </div>
-                <div class="timeline-item">
-                    <span class="time-label">Night (Dinner Time)</span>
-                    <div class="time-action">Take Germ Pill + Pain Pill <span class="food-note">After Food</span></div>
-                </div>
-            `;
-
-            nearbyContent.innerHTML = getMockPharmacies();
-        } 
-        else if (docType === 'medicine') {
-            titleSpan.innerText = 'What is this Medicine?';
-            mainContent.innerHTML = `
-                <div class="info-row"><span class="info-label">Name on Packet:</span> <span class="info-value highlight-value" style="font-size:1.1rem;">Crocin Advance</span></div>
-                <div class="info-row"><span class="info-label">Inside the Pill:</span> <span class="info-value">Paracetamol</span></div>
-                <div class="info-row"><span class="info-label">Power Level:</span> <span class="info-value">500mg</span></div>
-                <div class="info-row"><span class="info-label">Type:</span> <span class="info-value">Pill / Tablet</span></div>
-            `;
-            
-            safetyContent.innerHTML = `
-                <p style="margin-bottom: 10px;"><strong>What does it do?</strong> It brings down your body heat if you have fever. It also reduces body pain or headache.</p>
-                <div class="info-row" style="border:none;"><span class="info-label">Dangerous Rule:</span> <span class="info-value alert-value" style="text-align:left; font-size:0.9rem;">Eating too many of these pills can destroy your body's filter (liver). Do not drink alcohol.</span></div>
-            `;
-
-            if (safetyCard) safetyCard.classList.remove('hidden');
-
-            nearbyContent.innerHTML = getMockPharmacies();
+            timelineContent.innerHTML = scenario.timeline;
         }
-        else if (docType === 'lab_report') {
-            titleSpan.innerText = 'Simple Blood Test Results';
-            mainContent.innerHTML = `
-                <div style="font-size: 0.9rem; margin-bottom: 15px; color: var(--text-dim);">Full Blood Report:</div>
-                <div class="info-row"><span class="info-label">Red Blood:</span> <span class="info-value">Normal <span style="font-size:0.8rem; color:var(--text-dim);">(13.5 g/dL)</span></span></div>
-                <div class="info-row"><span class="info-label">White Guard Blood:</span> <span class="info-value alert-value">Too High! <span style="font-size:0.8rem; color:var(--text-dim);">(14,200)</span></span></div>
-                <div class="info-row"><span class="info-label">Bleeding Fixers:</span> <span class="info-value">Normal <span style="font-size:0.8rem; color:var(--text-dim);">(250,000)</span></span></div>
-                <div class="info-row"><span class="info-label">Fighter Cells:</span> <span class="info-value alert-value">Too High! <span style="font-size:0.8rem; color:var(--text-dim);">(82%)</span></span></div>
-            `;
-            
-            safetyContent.innerHTML = `
-                <p style="margin-bottom: 10px;"><strong>What does this mean?</strong> Your body has too many fighter cells (White Guard Blood). This usually means your body is fighting off an infection or germs inside you right now.</p>
-                <div class="info-row" style="border:none;"><span class="info-label">Action needed:</span> <span class="info-value alert-value" style="text-align:left; font-size:0.9rem;">You MUST see a doctor and show them this paper. You probably need fever or infection medicine.</span></div>
-            `;
 
-            if (safetyCard) safetyCard.classList.remove('hidden');
-
+        if (scenario.type === 'hospital') {
             nearbyContent.innerHTML = getMockHospitals();
-        }
-        else {
-            titleSpan.innerText = 'Document Analysis';
-            mainContent.innerHTML = `
-                <p>We could not confidently classify this medical document.</p>
-                <p style="color:var(--text-dim); font-size:0.9rem; margin-top:10px;">The AI detected text fragments but they did not match standard prescription or lab structures. Please ensure the image is clear, well-lit, and the text is readable.</p>
-            `;
-            safetyContent.innerHTML = `
-                <p><strong>Status:</strong> Low Confidence. Please re-take the photo or verify directly with a healthcare provider.</p>
-            `;
+        } else {
+            nearbyContent.innerHTML = getMockPharmacies();
         }
     }
 

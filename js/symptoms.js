@@ -134,6 +134,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const textInput = document.getElementById('symptoms-text-input');
     const recordBtn = document.getElementById('voice-record-btn');
     const severityInput = document.getElementById('sym-severity');
+    const genderSelect = document.getElementById('sym-gender');
+    const prefFemaleWrap = document.getElementById('pref-female-doc-wrap');
+    const prefFemaleCheckbox = document.getElementById('pref-female-doc');
 
     // Results & State
     const loadingState = document.getElementById('symptoms-loading');
@@ -206,6 +209,23 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Auto-init visible flow
     resetFlow();
+
+    // Gender Preference Logic
+    if (genderSelect && prefFemaleWrap) {
+        genderSelect.addEventListener('change', (e) => {
+            if (e.target.value === 'female') {
+                prefFemaleWrap.classList.remove('hidden');
+                if (prefFemaleCheckbox) prefFemaleCheckbox.checked = true;
+            } else {
+                prefFemaleWrap.classList.add('hidden');
+                if (prefFemaleCheckbox) prefFemaleCheckbox.checked = false;
+            }
+        });
+        if (genderSelect.value === 'female') {
+            prefFemaleWrap.classList.remove('hidden');
+            if (prefFemaleCheckbox) prefFemaleCheckbox.checked = true;
+        }
+    }
 
     // Step Navigation
     nextStep1.addEventListener('click', () => {
@@ -435,7 +455,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const doctorsContainer = document.getElementById('h-detail-doctors');
         doctorsContainer.innerHTML = '';
         if (h.doctors && h.doctors.length > 0) {
-            h.doctors.forEach(doc => {
+            let doctorsToRender = [...h.doctors];
+            if (prefFemaleCheckbox && prefFemaleCheckbox.checked) {
+                doctorsToRender = doctorsToRender.filter(doc => doc.emoji.includes('👩'));
+            }
+
+            doctorsToRender.forEach(doc => {
                 const docCard = document.createElement('div');
                 docCard.className = 'doctor-card';
                 docCard.innerHTML = `
